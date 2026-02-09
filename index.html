@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Quant Coders | NIT Jalandhar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00ff88;
+            --secondary: #0066ff;
+            --dark: #0a0e27;
+            --darker: #050812;
+            --accent: #ff0066;
+            --text: #e0e0e0;
+            --text-dim: #8892b0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--darker);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 0 5%;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .orb1 {
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            top: 10%;
+            right: 10%;
+            animation-delay: 0s;
+        }
+
+        .orb2 {
+            width: 300px;
+            height: 300px;
+            background: var(--secondary);
+            bottom: 20%;
+            left: 5%;
+            animation-delay: 2s;
+        }
+
+        .orb3 {
+            width: 250px;
+            height: 250px;
+            background: var(--accent);
+            top: 50%;
+            left: 50%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-30px, 30px) scale(0.9); }
+        }
+
+        .hero-content {
+            max-width: 900px;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .hero-tag {
+            font-family: 'Space Mono', monospace;
+            color: var(--primary);
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: slideUp 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-dim);
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeIn 0.8s ease-out 0.4s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeIn 0.8s ease-out 0.6s both;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--darker);
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 50px rgba(0, 255, 136, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 255, 136, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 5rem 5%;
+            background: var(--dark);
+            border-top: 1px solid rgba(0, 255, 136, 0.1);
+            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
+
+        /* Events Section */
+        .events {
+            padding: 6rem 5%;
+            background: var(--darker);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-tag {
+            font-family: 'Space Mono', monospace;
+            color: var(--primary);
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .event-card {
+            background: var(--dark);
+            border: 1px solid rgba(0, 255, 136, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .event-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .event-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 40px rgba(0, 255, 136, 0.2);
+        }
+
+        .event-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .event-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .event-card p {
+            color: var(--text-dim);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .event-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s;
+        }
+
+        .event-link:hover {
+            gap: 1rem;
+        }
+
+        /* About Section */
+        .about {
+            padding: 6rem 5%;
+            background: var(--dark);
+            border-top: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p {
+            color: var(--text-dim);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        .about-features {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: rgba(0, 255, 136, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 5%;
+            background: var(--darker);
+            border-top: 1px solid rgba(0, 255, 136, 0.1);
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(0, 255, 136, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 1.2rem;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            color: var(--darker);
+            transform: translateY(-3px);
+        }
+
+        footer p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                width: 70%;
+                max-width: 300px;
+                height: calc(100vh - 80px);
+                background: var(--dark);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                transition: right 0.3s;
+                border-left: 1px solid rgba(0, 255, 136, 0.1);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            nav {
+                padding: 1rem 5%;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .hero {
+                padding: 0 5%;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">SQC <span>&lt;/&gt;</span></div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="achievements.html">Achievements</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-bg">
+            <div class="grid-overlay"></div>
+            <div class="glow-orb orb1"></div>
+            <div class="glow-orb orb2"></div>
+            <div class="glow-orb orb3"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-tag">NIT Jalandhar | Technical Club</div>
+            <h1>Super Quant Coders</h1>
+            <p>Empowering the next generation of tech innovators through competitive programming, AI/ML, and cutting-edge technology events</p>
+            <div class="cta-buttons">
+                <a href="events.html" class="btn btn-primary">Explore Events</a>
+                <a href="contact.html" class="btn btn-secondary">Join Us</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>500+</h3>
+                <p>Active Members</p>
+            </div>
+            <div class="stat-item">
+                <h3>50+</h3>
+                <p>Events Organized</p>
+            </div>
+            <div class="stat-item">
+                <h3>15+</h3>
+                <p>Tech Domains</p>
+            </div>
+            <div class="stat-item">
+                <h3>10K+</h3>
+                <p>Participants Reached</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="events">
+        <div class="section-header">
+            <div class="section-tag">Our Events</div>
+            <h2>Signature Events</h2>
+            <p>From competitive coding to AI workshops, we organize events that shape future technologists</p>
+        </div>
+        <div class="events-grid">
+            <div class="event-card" onclick="location.href='chichi.html'">
+                <div class="event-icon">🤖</div>
+                <h3>Chi Chi</h3>
+                <p>Our flagship robotics and AI event featuring robotic dog competitions, automation challenges, and cutting-edge tech demonstrations.</p>
+                <a href="chichi.html" class="event-link">Learn More →</a>
+            </div>
+            <div class="event-card" onclick="location.href='codewars.html'">
+                <div class="event-icon">⚔️</div>
+                <h3>Code Wars</h3>
+                <p>Intense competitive programming battles testing algorithmic prowess and problem-solving skills under time pressure.</p>
+                <a href="codewars.html" class="event-link">Learn More →</a>
+            </div>
+            <div class="event-card" onclick="location.href='hackathon.html'">
+                <div class="event-icon">💻</div>
+                <h3>SQC Hackathon</h3>
+                <p>36-hour innovation marathon where teams build groundbreaking solutions to real-world problems.</p>
+                <a href="hackathon.html" class="event-link">Learn More →</a>
+            </div>
+            <div class="event-card" onclick="location.href='aiml-workshop.html'">
+                <div class="event-icon">🧠</div>
+                <h3>AI/ML Workshop</h3>
+                <p>Hands-on workshops covering machine learning, deep learning, and artificial intelligence applications.</p>
+                <a href="aiml-workshop.html" class="event-link">Learn More →</a>
+            </div>
+            <div class="event-card" onclick="location.href='webdev-bootcamp.html'">
+                <div class="event-icon">🌐</div>
+                <h3>Web Dev Bootcamp</h3>
+                <p>Comprehensive full-stack development training from frontend frameworks to backend architectures.</p>
+                <a href="webdev-bootcamp.html" class="event-link">Learn More →</a>
+            </div>
+            <div class="event-card" onclick="location.href='ctf.html'">
+                <div class="event-icon">🔐</div>
+                <h3>Capture The Flag</h3>
+                <p>Cybersecurity challenges testing penetration testing, cryptography, and ethical hacking skills.</p>
+                <a href="ctf.html" class="event-link">Learn More →</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="about">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>About Super Quant Coders</h2>
+                <p>Super Quant Coders (SQC) is NIT Jalandhar's premier technical club dedicated to fostering innovation, technical excellence, and collaborative learning in the fields of computer science and technology.</p>
+                <p>Since our inception, we've been committed to creating a vibrant community where students can explore their passion for technology, develop industry-relevant skills, and connect with like-minded individuals.</p>
+            </div>
+            <div class="about-features">
+                <div class="feature-item">
+                    <div class="feature-icon">🎯</div>
+                    <div>
+                        <h4>Competitive Programming</h4>
+                        <p>Regular contests and training sessions for coding competitions</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🚀</div>
+                    <div>
+                        <h4>Innovation Hub</h4>
+                        <p>Platform for students to bring their innovative ideas to life</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🤝</div>
+                    <div>
+                        <h4>Industry Connect</h4>
+                        <p>Networking opportunities with tech professionals and companies</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📚</div>
+                    <div>
+                        <h4>Learning Resources</h4>
+                        <p>Curated tutorials, workshops, and mentorship programs</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="#" title="LinkedIn">in</a>
+                <a href="#" title="GitHub">gh</a>
+                <a href="#" title="Instagram">ig</a>
+                <a href="#" title="Twitter">tw</a>
+            </div>
+            <p>&copy; 2026 Super Quant Coders | NIT Jalandhar. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const nav = document.querySelector('nav');
+            const navLinks = document.getElementById('navLinks');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            if (!nav.contains(event.target) && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
