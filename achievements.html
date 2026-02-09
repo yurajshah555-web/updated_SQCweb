@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievements | Super Quant Coders</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00ff88;
+            --secondary: #0066ff;
+            --dark: #0a0e27;
+            --darker: #050812;
+            --accent: #ff0066;
+            --text: #e0e0e0;
+            --text-dim: #8892b0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--darker);
+            color: var(--text);
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .page-header {
+            padding: 10rem 5% 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(0, 102, 255, 0.05));
+        }
+
+        .page-header h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .achievements-section {
+            padding: 4rem 5%;
+        }
+
+        .year-section {
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+        }
+
+        .year-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .achievement-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .achievement-card {
+            background: var(--dark);
+            border: 1px solid rgba(0, 255, 136, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 2rem;
+            transition: all 0.3s;
+        }
+
+        .achievement-card:hover {
+            border-color: var(--primary);
+            transform: translateX(10px);
+            box-shadow: -10px 0 40px rgba(0, 255, 136, 0.2);
+        }
+
+        .achievement-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+
+        .achievement-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .achievement-meta {
+            color: var(--primary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .achievement-content p {
+            color: var(--text-dim);
+            line-height: 1.8;
+        }
+
+        .stats-banner {
+            background: var(--dark);
+            border: 1px solid rgba(0, 255, 136, 0.1);
+            border-radius: 12px;
+            padding: 3rem;
+            margin: 4rem auto;
+            max-width: 1200px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            color: var(--text-dim);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        footer {
+            padding: 2rem 5%;
+            background: var(--darker);
+            border-top: 1px solid rgba(0, 255, 136, 0.1);
+            text-align: center;
+            color: var(--text-dim);
+        }
+
+        @media (max-width: 768px) {
+            .achievement-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .achievement-icon {
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">SQC <span>&lt;/&gt;</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="achievements.html">Achievements</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section class="page-header">
+        <h1>Our Achievements</h1>
+        <p>Celebrating excellence, innovation, and the remarkable accomplishments of our club members</p>
+    </section>
+
+    <section class="achievements-section">
+        <div class="stats-banner">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>50+</h3>
+                    <p>National Awards</p>
+                </div>
+                <div class="stat-item">
+                    <h3>15+</h3>
+                    <p>International Wins</p>
+                </div>
+                <div class="stat-item">
+                    <h3>100+</h3>
+                    <p>Hackathon Victories</p>
+                </div>
+                <div class="stat-item">
+                    <h3>₹50L+</h3>
+                    <p>Prize Money Won</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="year-section">
+            <h2 class="year-title">2026</h2>
+            <div class="achievement-grid">
+                <div class="achievement-card">
+                    <div class="achievement-icon">🏆</div>
+                    <div class="achievement-content">
+                        <h3>Smart India Hackathon - National Winner</h3>
+                        <div class="achievement-meta">January 2026 • Team: CodeBusters</div>
+                        <p>Developed an AI-powered agriculture monitoring system that won the national championship, securing ₹1 lakh prize money and recognition from the Ministry of Education.</p>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon" style="background: linear-gradient(135deg, #ff0066, #ff6600);">🥇</div>
+                    <div class="achievement-content">
+                        <h3>Google Code Jam - Global Top 500</h3>
+                        <div class="achievement-meta">February 2026 • Arjun Patel</div>
+                        <p>Our president ranked in the top 500 globally in Google Code Jam, competing against 50,000+ participants from around the world.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="year-section">
+            <h2 class="year-title">2025</h2>
+            <div class="achievement-grid">
+                <div class="achievement-card">
+                    <div class="achievement-icon" style="background: linear-gradient(135deg, #8b5cf6, #ec4899);">🎯</div>
+                    <div class="achievement-content">
+                        <h3>ACM ICPC Asia Regional - 12th Place</h3>
+                        <div class="achievement-meta">December 2025 • Team: QuantumCoders</div>
+                        <p>Secured 12th position out of 300+ teams in ACM ICPC Asia Regional Finals, solving 7 out of 11 problems.</p>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon" style="background: linear-gradient(135deg, #06b6d4, #3b82f6);">🤖</div>
+                    <div class="achievement-content">
+                        <h3>IEEE Robotics Competition - 1st Place</h3>
+                        <div class="achievement-meta">November 2025 • Team: RoboWarriors</div>
+                        <p>Won the national IEEE robotics competition with our autonomous navigation robot, defeating 80+ teams from premier institutes.</p>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon" style="background: linear-gradient(135deg, #10b981, #14b8a6);">💻</div>
+                    <div class="achievement-content">
+                        <h3>Microsoft Imagine Cup - India Finalists</h3>
+                        <div class="achievement-meta">October 2025 • Team: InnoTech</div>
+                        <p>Selected as one of 10 finalist teams in Microsoft Imagine Cup India for our healthcare accessibility solution using AI and mobile technology.</p>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">🔐</div>
+                    <div class="achievement-content">
+                        <h3>National Cyber Security CTF - 3rd Place</h3>
+                        <div class="achievement-meta">September 2025 • Team: SecureShield</div>
+                        <p>Secured bronze medal in the national CTF competition organized by CERT-In, solving complex cryptography and penetration testing challenges.</p>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">🌐</div>
+                    <div class="achievement-content">
+                        <h3>Facebook Hacker Cup - Round 2 Qualifier</h3>
+                        <div class="achievement-meta">August 2025 • Multiple Members</div>
+                        <p>Five of our members qualified for Facebook Hacker Cup Round 2, placing in the top 3000 globally.</p>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon" style="background: linear-gradient(135deg, #ec4899, #f43f5e);">📱</div>
+                    <div class="achievement-content">
+                        <h3>Google Solution Challenge - Top 100</h3>
+                        <div class="achievement-meta">July 2025 • Team: DevForGood</div>
+                        <p>Our mobile app for sustainable agriculture reached top 100 globally out of 5000+ submissions in Google Developer Student Clubs Solution Challenge.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="year-section">
+            <h2 class="year-title">2024</h2>
+            <div class="achievement-grid">
+                <div class="achievement-card">
+                    <div class="achievement-icon" style="background: linear-gradient(135deg, #14b8a6, #06b6d4);">🎓</div>
+                    <div class="achievement-content">
+                        <h3>Best Technical Club Award</h3>
+                        <div class="achievement-meta">December 2024 • NIT Jalandhar</div>
+                        <p>Awarded "Best Technical Club" by NIT Jalandhar for exceptional contribution to technical activities and student development.</p>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon" style="background: linear-gradient(135deg, #eab308, #f59e0b);">💡</div>
+                    <div class="achievement-content">
+                        <h3>TechGig Code Gladiators - Finalist</h3>
+                        <div class="achievement-meta">October 2024 • Priya Sharma</div>
+                        <p>Reached the grand finale of India's largest coding competition with over 300,000 participants.</p>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon" style="background: linear-gradient(135deg, #a855f7, #ec4899);">🎮</div>
+                    <div class="achievement-content">
+                        <h3>NVIDIA Jetson AI Challenge - Winner</h3>
+                        <div class="achievement-meta">August 2024 • Team: AIExplorers</div>
+                        <p>Won NVIDIA's AI challenge with a real-time object detection system for traffic management, receiving NVIDIA Jetson developer kit.</p>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon" style="background: linear-gradient(135deg, #22c55e, #10b981);">📊</div>
+                    <div class="achievement-content">
+                        <h3>Kaggle Competition - Bronze Medal</h3>
+                        <div class="achievement-meta">June 2024 • Meera Mehta</div>
+                        <p>Achieved bronze medal in Kaggle's machine learning competition, ranking in top 10% among 2000+ participants.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Super Quant Coders | NIT Jalandhar. All rights reserved.</p>
+    </footer>
+</body>
+</html>

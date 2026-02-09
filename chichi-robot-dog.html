@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Chi - Your Robotic Companion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow-x: hidden;
+            color: #fff;
+        }
+
+        /* Animated Background */
+        .background {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .circuit {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(255,255,255,0.1) 50px, rgba(255,255,255,0.1) 51px),
+                repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(255,255,255,0.1) 50px, rgba(255,255,255,0.1) 51px);
+            animation: circuitMove 20s linear infinite;
+        }
+
+        @keyframes circuitMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Navigation */
+        nav {
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #fff, #a8edea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #a8edea;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 50px;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 500px;
+            animation: fadeInLeft 1s ease-out;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 60px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            font-size: 16px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a6f);
+            color: white;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        /* Robot Dog Container */
+        .robot-container {
+            position: relative;
+            animation: fadeInRight 1s ease-out;
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .robot-dog {
+            width: 400px;
+            height: 400px;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .robot-dog:hover {
+            transform: scale(1.05);
+        }
+
+        /* Robot Parts */
+        .robot-body {
+            position: absolute;
+            width: 200px;
+            height: 120px;
+            background: linear-gradient(145deg, #4facfe, #00f2fe);
+            border-radius: 60px;
+            top: 150px;
+            left: 100px;
+            box-shadow: 0 20px 60px rgba(0, 242, 254, 0.4);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .robot-head {
+            position: absolute;
+            width: 140px;
+            height: 100px;
+            background: linear-gradient(145deg, #667eea, #764ba2);
+            border-radius: 50px;
+            top: 80px;
+            left: 130px;
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+            animation: headBob 2s ease-in-out infinite;
+        }
+
+        @keyframes headBob {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        .eye {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: #fff;
+            border-radius: 50%;
+            top: 35px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+            animation: blink 4s infinite;
+        }
+
+        @keyframes blink {
+            0%, 96%, 100% { height: 25px; }
+            98% { height: 2px; }
+        }
+
+        .eye.left { left: 30px; }
+        .eye.right { right: 30px; }
+
+        .eye-pupil {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #667eea;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: lookAround 5s infinite;
+        }
+
+        @keyframes lookAround {
+            0%, 100% { transform: translate(-50%, -50%); }
+            25% { transform: translate(-70%, -50%); }
+            50% { transform: translate(-30%, -50%); }
+            75% { transform: translate(-50%, -30%); }
+        }
+
+        .ear {
+            position: absolute;
+            width: 30px;
+            height: 60px;
+            background: linear-gradient(145deg, #764ba2, #667eea);
+            border-radius: 15px 15px 5px 5px;
+            top: -30px;
+            animation: earWiggle 2s ease-in-out infinite;
+        }
+
+        @keyframes earWiggle {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(10deg); }
+        }
+
+        .ear.left { left: 20px; animation-delay: 0.3s; }
+        .ear.right { right: 20px; transform-origin: bottom right; }
+
+        .nose {
+            position: absolute;
+            width: 20px;
+            height: 15px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.6);
+        }
+
+        .leg {
+            position: absolute;
+            width: 40px;
+            height: 80px;
+            background: linear-gradient(145deg, #4facfe, #00f2fe);
+            border-radius: 20px;
+            top: 250px;
+            animation: walk 1s ease-in-out infinite;
+        }
+
+        @keyframes walk {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(10deg); }
+        }
+
+        .leg.front-left { left: 100px; animation-delay: 0s; }
+        .leg.front-right { left: 180px; animation-delay: 0.5s; }
+        .leg.back-left { left: 220px; animation-delay: 0.25s; }
+        .leg.back-right { left: 300px; animation-delay: 0.75s; }
+
+        .tail {
+            position: absolute;
+            width: 15px;
+            height: 80px;
+            background: linear-gradient(145deg, #667eea, #764ba2);
+            border-radius: 10px;
+            top: 130px;
+            right: 90px;
+            transform-origin: top;
+            animation: tailWag 1s ease-in-out infinite;
+        }
+
+        @keyframes tailWag {
+            0%, 100% { transform: rotate(-20deg); }
+            50% { transform: rotate(20deg); }
+        }
+
+        /* Energy Particles */
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: particleFloat 3s infinite;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 50px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 48px;
+            margin-bottom: 60px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        /* Interactive Controls */
+        .controls {
+            padding: 100px 50px;
+            text-align: center;
+        }
+
+        .controls h2 {
+            font-size: 48px;
+            margin-bottom: 40px;
+        }
+
+        .control-panel {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .control-btn {
+            padding: 20px 40px;
+            font-size: 18px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .control-btn.active {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a6f);
+            border-color: transparent;
+        }
+
+        /* Status Display */
+        .status-display {
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+            font-size: 18px;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4facfe, #00f2fe);
+            transition: width 0.3s;
+            border-radius: 5px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 30px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .robot-dog {
+                transform: scale(0.8);
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            nav {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="circuit"></div>
+    </div>
+
+    <nav>
+        <div class="logo">🤖 CHI CHI</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#controls">Controls</a></li>
+            <li><a href="#about">About</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Meet Chi Chi</h1>
+            <p>Your intelligent robotic companion powered by advanced AI. Experience the future of pet robotics with unprecedented interaction and personality.</p>
+            <div class="cta-buttons">
+                <button class="btn btn-primary" onclick="activateChiChi()">Activate Chi Chi</button>
+                <button class="btn btn-secondary" onclick="scrollToFeatures()">Learn More</button>
+            </div>
+        </div>
+
+        <div class="robot-container">
+            <div class="robot-dog" id="robotDog" onclick="petChiChi()">
+                <!-- Head -->
+                <div class="robot-head">
+                    <div class="ear left"></div>
+                    <div class="ear right"></div>
+                    <div class="eye left">
+                        <div class="eye-pupil"></div>
+                    </div>
+                    <div class="eye right">
+                        <div class="eye-pupil"></div>
+                    </div>
+                    <div class="nose"></div>
+                </div>
+                
+                <!-- Body -->
+                <div class="robot-body"></div>
+                
+                <!-- Legs -->
+                <div class="leg front-left"></div>
+                <div class="leg front-right"></div>
+                <div class="leg back-left"></div>
+                <div class="leg back-right"></div>
+                
+                <!-- Tail -->
+                <div class="tail"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <h2>Advanced Features</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🧠</div>
+                <h3>AI Intelligence</h3>
+                <p>Advanced neural networks enable Chi Chi to learn from interactions and adapt to your preferences.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👀</div>
+                <h3>Computer Vision</h3>
+                <p>Sophisticated cameras and sensors help Chi Chi recognize faces, objects, and navigate environments.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎵</div>
+                <h3>Voice Recognition</h3>
+                <p>Responds to voice commands and can express emotions through a variety of sounds and movements.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Fast Response</h3>
+                <p>Lightning-fast processors ensure Chi Chi reacts instantly to commands and environmental changes.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔋</div>
+                <h3>Long Battery Life</h3>
+                <p>Efficient power management provides up to 8 hours of continuous operation on a single charge.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>App Connected</h3>
+                <p>Control and monitor Chi Chi remotely through our intuitive mobile application.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="controls" id="controls">
+        <h2>Interactive Controls</h2>
+        <p>Try controlling Chi Chi with these commands</p>
+        
+        <div class="control-panel">
+            <button class="control-btn" onclick="commandSit()">🪑 Sit</button>
+            <button class="control-btn" onclick="commandPlay()">⚽ Play</button>
+            <button class="control-btn" onclick="commandDance()">💃 Dance</button>
+            <button class="control-btn" onclick="commandSleep()">😴 Sleep</button>
+            <button class="control-btn" onclick="commandPatrol()">🚶 Patrol</button>
+        </div>
+
+        <div class="status-display">
+            <div class="status-item">
+                <span>Battery Level:</span>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="battery" style="width: 85%"></div>
+                </div>
+            </div>
+            <div class="status-item">
+                <span>Happiness:</span>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="happiness" style="width: 70%"></div>
+                </div>
+            </div>
+            <div class="status-item">
+                <span>Energy:</span>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="energy" style="width: 60%"></div>
+                </div>
+            </div>
+            <div class="status-item">
+                <span>Status:</span>
+                <span id="statusText">Ready</span>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Chi Chi Robotics. Powered by Advanced AI Technology.</p>
+    </footer>
+
+    <script>
+        // Particle generation
+        function createParticles() {
+            const robotContainer = document.querySelector('.robot-container');
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 400 + 'px';
+                particle.style.top = Math.random() * 400 + 'px';
+                particle.style.animationDelay = Math.random() * 3 + 's';
+                robotContainer.appendChild(particle);
+            }
+        }
+
+        createParticles();
+
+        // Interactive functions
+        let currentStatus = 'Ready';
+        let happiness = 70;
+        let energy = 60;
+        let battery = 85;
+
+        function updateStatus(status) {
+            currentStatus = status;
+            document.getElementById('statusText').textContent = status;
+        }
+
+        function updateStats() {
+            document.getElementById('happiness').style.width = happiness + '%';
+            document.getElementById('energy').style.width = energy + '%';
+            document.getElementById('battery').style.width = battery + '%';
+        }
+
+        function activateChiChi() {
+            updateStatus('Activating...');
+            setTimeout(() => {
+                updateStatus('Active & Ready!');
+                happiness = Math.min(100, happiness + 10);
+                updateStats();
+            }, 1000);
+        }
+
+        function petChiChi() {
+            updateStatus('Happy! 🎉');
+            happiness = Math.min(100, happiness + 5);
+            updateStats();
+            setTimeout(() => updateStatus('Ready'), 2000);
+        }
+
+        function commandSit() {
+            updateStatus('Sitting...');
+            energy = Math.max(0, energy - 5);
+            updateStats();
+            setTimeout(() => updateStatus('Ready'), 2000);
+        }
+
+        function commandPlay() {
+            updateStatus('Playing! 🎾');
+            happiness = Math.min(100, happiness + 15);
+            energy = Math.max(0, energy - 15);
+            battery = Math.max(0, battery - 5);
+            updateStats();
+            setTimeout(() => updateStatus('Ready'), 3000);
+        }
+
+        function commandDance() {
+            updateStatus('Dancing! 🕺');
+            const robot = document.getElementById('robotDog');
+            robot.style.animation = 'spin 2s ease-in-out';
+            happiness = Math.min(100, happiness + 10);
+            energy = Math.max(0, energy - 10);
+            battery = Math.max(0, battery - 3);
+            updateStats();
+            setTimeout(() => {
+                robot.style.animation = '';
+                updateStatus('Ready');
+            }, 2000);
+        }
+
+        function commandSleep() {
+            updateStatus('Sleeping... 💤');
+            energy = Math.min(100, energy + 20);
+            battery = Math.min(100, battery + 10);
+            updateStats();
+            setTimeout(() => updateStatus('Recharged!'), 3000);
+        }
+
+        function commandPatrol() {
+            updateStatus('Patrolling... 👁️');
+            energy = Math.max(0, energy - 8);
+            battery = Math.max(0, battery - 4);
+            updateStats();
+            setTimeout(() => updateStatus('Area Secure'), 3000);
+        }
+
+        function scrollToFeatures() {
+            document.getElementById('features').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Add keyframes for spin animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes spin {
+                0% { transform: rotate(0deg) scale(1); }
+                50% { transform: rotate(180deg) scale(1.1); }
+                100% { transform: rotate(360deg) scale(1); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Button active state toggle
+        document.querySelectorAll('.control-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.control-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                setTimeout(() => this.classList.remove('active'), 2000);
+            });
+        });
+
+        // Battery drain simulation
+        setInterval(() => {
+            if (currentStatus === 'Active & Ready!' || currentStatus === 'Ready') {
+                battery = Math.max(0, battery - 0.5);
+                updateStats();
+            }
+        }, 5000);
+    </script>
+</body>
+</html>

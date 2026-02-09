@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Team | Super Quant Coders</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00ff88;
+            --secondary: #0066ff;
+            --dark: #0a0e27;
+            --darker: #050812;
+            --accent: #ff0066;
+            --text: #e0e0e0;
+            --text-dim: #8892b0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--darker);
+            color: var(--text);
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .page-header {
+            padding: 10rem 5% 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(0, 102, 255, 0.05));
+        }
+
+        .page-header h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .team-section {
+            padding: 4rem 5%;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary);
+        }
+
+        .team-grid {
+            max-width: 1400px;
+            margin: 0 auto 4rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-card {
+            background: var(--dark);
+            border: 1px solid rgba(0, 255, 136, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .team-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 15px 50px rgba(0, 255, 136, 0.2);
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--darker);
+        }
+
+        .team-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .role {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .team-card p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .social-links a {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: rgba(0, 255, 136, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            color: var(--darker);
+            transform: translateY(-3px);
+        }
+
+        footer {
+            padding: 2rem 5%;
+            background: var(--darker);
+            border-top: 1px solid rgba(0, 255, 136, 0.1);
+            text-align: center;
+            color: var(--text-dim);
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">SQC <span>&lt;/&gt;</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="achievements.html">Achievements</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section class="page-header">
+        <h1>Meet Our Team</h1>
+        <p>The passionate individuals driving innovation and technical excellence at Super Quant Coders</p>
+    </section>
+
+    <section class="team-section">
+        <h2 class="section-title">Core Team</h2>
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="avatar">AP</div>
+                <h3>Arjun Patel</h3>
+                <div class="role">President</div>
+                <p>Final year CS student passionate about competitive programming and AI. 6★ on CodeChef.</p>
+                <div class="social-links">
+                    <a href="#">in</a>
+                    <a href="#">gh</a>
+                    <a href="#">tw</a>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <div class="avatar" style="background: linear-gradient(135deg, #ff0066, #ff6600);">PS</div>
+                <h3>Priya Sharma</h3>
+                <div class="role">Vice President</div>
+                <p>Machine Learning enthusiast and research scholar. Published 3 papers in AI conferences.</p>
+                <div class="social-links">
+                    <a href="#">in</a>
+                    <a href="#">gh</a>
+                    <a href="#">tw</a>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <div class="avatar" style="background: linear-gradient(135deg, #8b5cf6, #ec4899);">RK</div>
+                <h3>Rahul Kumar</h3>
+                <div class="role">Technical Lead</div>
+                <p>Full-stack developer and open-source contributor. Maintains 5 popular GitHub projects.</p>
+                <div class="social-links">
+                    <a href="#">in</a>
+                    <a href="#">gh</a>
+                    <a href="#">tw</a>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <div class="avatar" style="background: linear-gradient(135deg, #06b6d4, #3b82f6);">SG</div>
+                <h3>Sneha Gupta</h3>
+                <div class="role">Events Head</div>
+                <p>Expert event organizer with experience managing 20+ tech events and hackathons.</p>
+                <div class="social-links">
+                    <a href="#">in</a>
+                    <a href="#">gh</a>
+                    <a href="#">tw</a>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <div class="avatar" style="background: linear-gradient(135deg, #10b981, #14b8a6);">AV</div>
+                <h3>Amit Verma</h3>
+                <div class="role">PR & Marketing</div>
+                <p>Social media strategist who grew our Instagram following to 10K+ in 6 months.</p>
+                <div class="social-links">
+                    <a href="#">in</a>
+                    <a href="#">gh</a>
+                    <a href="#">tw</a>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <div class="avatar" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">NK</div>
+                <h3>Neha Kapoor</h3>
+                <div class="role">Design Head</div>
+                <p>UI/UX designer creating stunning visuals for all our events and promotional materials.</p>
+                <div class="social-links">
+                    <a href="#">in</a>
+                    <a href="#">gh</a>
+                    <a href="#">tw</a>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Department Leads</h2>
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="avatar" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">VS</div>
+                <h3>Vikram Singh</h3>
+                <div class="role">Web Development</div>
+                <p>MERN stack specialist leading web dev workshops and projects.</p>
+                <div class="social-links">
+                    <a href="#">in</a>
+                    <a href="#">gh</a>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <div class="avatar" style="background: linear-gradient(135deg, #ec4899, #f43f5e);">MM</div>
+                <h3>Meera Mehta</h3>
+                <div class="role">Data Science</div>
+                <p>Data analyst with expertise in Python, R, and machine learning.</p>
+                <div class="social-links">
+                    <a href="#">in</a>
+                    <a href="#">gh</a>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <div class="avatar" style="background: linear-gradient(135deg, #14b8a6, #06b6d4);">KR</div>
+                <h3>Karan Reddy</h3>
+                <div class="role">Cybersecurity</div>
+                <p>Ethical hacker and CTF champion organizing security workshops.</p>
+                <div class="social-links">
+                    <a href="#">in</a>
+                    <a href="#">gh</a>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <div class="avatar" style="background: linear-gradient(135deg, #eab308, #f59e0b);">DP</div>
+                <h3>Divya Patel</h3>
+                <div class="role">Mobile Development</div>
+                <p>Flutter & React Native developer building cross-platform apps.</p>
+                <div class="social-links">
+                    <a href="#">in</a>
+                    <a href="#">gh</a>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <div class="avatar" style="background: linear-gradient(135deg, #a855f7, #ec4899);">SS</div>
+                <h3>Sahil Sharma</h3>
+                <div class="role">Competitive Programming</div>
+                <p>ACM ICPC regionalist training juniors for coding contests.</p>
+                <div class="social-links">
+                    <a href="#">in</a>
+                    <a href="#">gh</a>
+                </div>
+            </div>
+
+            <div class="team-card">
+                <div class="avatar" style="background: linear-gradient(135deg, #22c55e, #10b981);">TM</div>
+                <h3>Tanvi Mishra</h3>
+                <div class="role">Robotics & IoT</div>
+                <p>Arduino & Raspberry Pi expert leading Chi Chi robotics event.</p>
+                <div class="social-links">
+                    <a href="#">in</a>
+                    <a href="#">gh</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Super Quant Coders | NIT Jalandhar. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Chi - Robotics Event | Super Quant Coders</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00ff88;
+            --secondary: #0066ff;
+            --dark: #0a0e27;
+            --darker: #050812;
+            --accent: #ff0066;
+            --text: #e0e0e0;
+            --text-dim: #8892b0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--darker);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* Navigation - Same as index */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .event-hero {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 5% 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 30% 50%, rgba(0, 255, 136, 0.1), transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(0, 102, 255, 0.1), transparent 50%);
+        }
+
+        .event-hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            width: 100%;
+        }
+
+        .event-info h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .event-tag {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .event-info p {
+            font-size: 1.15rem;
+            color: var(--text-dim);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .event-meta {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .meta-icon {
+            font-size: 1.3rem;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--darker);
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 50px rgba(0, 255, 136, 0.5);
+        }
+
+        /* Robot Dog */
+        .robot-showcase {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .robot-dog {
+            width: 400px;
+            height: 400px;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .robot-dog:hover {
+            transform: scale(1.05);
+        }
+
+        .robot-body {
+            position: absolute;
+            width: 200px;
+            height: 120px;
+            background: linear-gradient(145deg, #00ff88, #00cc6f);
+            border-radius: 60px;
+            top: 150px;
+            left: 100px;
+            box-shadow: 0 20px 60px rgba(0, 255, 136, 0.4);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .robot-head {
+            position: absolute;
+            width: 140px;
+            height: 100px;
+            background: linear-gradient(145deg, #0066ff, #0052cc);
+            border-radius: 50px;
+            top: 80px;
+            left: 130px;
+            box-shadow: 0 15px 40px rgba(0, 102, 255, 0.4);
+            animation: headBob 2s ease-in-out infinite;
+        }
+
+        @keyframes headBob {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        .eye {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: #fff;
+            border-radius: 50%;
+            top: 35px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+            animation: blink 4s infinite;
+        }
+
+        @keyframes blink {
+            0%, 96%, 100% { height: 25px; }
+            98% { height: 2px; }
+        }
+
+        .eye.left { left: 30px; }
+        .eye.right { right: 30px; }
+
+        .eye-pupil {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #0066ff;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: lookAround 5s infinite;
+        }
+
+        @keyframes lookAround {
+            0%, 100% { transform: translate(-50%, -50%); }
+            25% { transform: translate(-70%, -50%); }
+            50% { transform: translate(-30%, -50%); }
+            75% { transform: translate(-50%, -30%); }
+        }
+
+        .ear {
+            position: absolute;
+            width: 30px;
+            height: 60px;
+            background: linear-gradient(145deg, #0052cc, #0066ff);
+            border-radius: 15px 15px 5px 5px;
+            top: -30px;
+            animation: earWiggle 2s ease-in-out infinite;
+        }
+
+        @keyframes earWiggle {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(10deg); }
+        }
+
+        .ear.left { left: 20px; animation-delay: 0.3s; }
+        .ear.right { right: 20px; transform-origin: bottom right; }
+
+        .nose {
+            position: absolute;
+            width: 20px;
+            height: 15px;
+            background: #ff0066;
+            border-radius: 50%;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 15px rgba(255, 0, 102, 0.6);
+        }
+
+        .leg {
+            position: absolute;
+            width: 40px;
+            height: 80px;
+            background: linear-gradient(145deg, #00ff88, #00cc6f);
+            border-radius: 20px;
+            top: 250px;
+            animation: walk 1s ease-in-out infinite;
+        }
+
+        @keyframes walk {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(10deg); }
+        }
+
+        .leg.front-left { left: 100px; animation-delay: 0s; }
+        .leg.front-right { left: 180px; animation-delay: 0.5s; }
+        .leg.back-left { left: 220px; animation-delay: 0.25s; }
+        .leg.back-right { left: 300px; animation-delay: 0.75s; }
+
+        .tail {
+            position: absolute;
+            width: 15px;
+            height: 80px;
+            background: linear-gradient(145deg, #0066ff, #0052cc);
+            border-radius: 10px;
+            top: 130px;
+            right: 90px;
+            transform-origin: top;
+            animation: tailWag 1s ease-in-out infinite;
+        }
+
+        @keyframes tailWag {
+            0%, 100% { transform: rotate(-20deg); }
+            50% { transform: rotate(20deg); }
+        }
+
+        /* Details Section */
+        .event-details {
+            padding: 6rem 5%;
+            background: var(--dark);
+        }
+
+        .details-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .detail-card {
+            background: var(--darker);
+            border: 1px solid rgba(0, 255, 136, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .detail-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .detail-card h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .detail-card ul {
+            list-style: none;
+            color: var(--text-dim);
+            line-height: 2;
+        }
+
+        .detail-card ul li::before {
+            content: "▹ ";
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Timeline */
+        .timeline {
+            padding: 6rem 5%;
+            background: var(--darker);
+        }
+
+        .timeline-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 60px;
+            top: 60px;
+            width: 2px;
+            height: calc(100% + 3rem);
+            background: rgba(0, 255, 136, 0.2);
+        }
+
+        .timeline-item:last-child::before {
+            display: none;
+        }
+
+        .timeline-date {
+            text-align: right;
+            padding-top: 0.5rem;
+        }
+
+        .timeline-date h4 {
+            font-family: 'Space Mono', monospace;
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-date p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        .timeline-content {
+            background: var(--dark);
+            border: 1px solid rgba(0, 255, 136, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .timeline-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content p {
+            color: var(--text-dim);
+            line-height: 1.8;
+        }
+
+        /* Registration */
+        .registration {
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(0, 102, 255, 0.05));
+            text-align: center;
+        }
+
+        .registration h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+
+        .registration p {
+            color: var(--text-dim);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem 5%;
+            background: var(--darker);
+            border-top: 1px solid rgba(0, 255, 136, 0.1);
+            text-align: center;
+            color: var(--text-dim);
+        }
+
+        @media (max-width: 968px) {
+            .event-hero-content {
+                grid-template-columns: 1fr;
+            }
+
+            .robot-dog {
+                transform: scale(0.8);
+            }
+
+            .timeline-item {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-date {
+                text-align: left;
+            }
+
+            .timeline-item::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">SQC <span>&lt;/&gt;</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="achievements.html">Achievements</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section class="event-hero">
+        <div class="hero-bg"></div>
+        <div class="event-hero-content">
+            <div class="event-info">
+                <span class="event-tag">🤖 Flagship Event</span>
+                <h1>Chi Chi</h1>
+                <p>Experience the future of robotics with our signature event featuring robotic dog competitions, automation challenges, and cutting-edge AI demonstrations. Chi Chi brings together innovators, engineers, and tech enthusiasts to showcase the latest in robotics technology.</p>
+                <div class="event-meta">
+                    <div class="meta-item">
+                        <span class="meta-icon">📅</span>
+                        <span>March 15-17, 2026</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-icon">📍</span>
+                        <span>NIT Jalandhar Campus</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-icon">👥</span>
+                        <span>500+ Participants</span>
+                    </div>
+                </div>
+                <a href="#register" class="btn btn-primary">Register Now</a>
+            </div>
+            <div class="robot-showcase">
+                <div class="robot-dog" id="robotDog" onclick="petChiChi()">
+                    <div class="robot-head">
+                        <div class="ear left"></div>
+                        <div class="ear right"></div>
+                        <div class="eye left">
+                            <div class="eye-pupil"></div>
+                        </div>
+                        <div class="eye right">
+                            <div class="eye-pupil"></div>
+                        </div>
+                        <div class="nose"></div>
+                    </div>
+                    <div class="robot-body"></div>
+                    <div class="leg front-left"></div>
+                    <div class="leg front-right"></div>
+                    <div class="leg back-left"></div>
+                    <div class="leg back-right"></div>
+                    <div class="tail"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="event-details">
+        <div class="details-container">
+            <div class="section-header">
+                <h2>Event Highlights</h2>
+            </div>
+            <div class="details-grid">
+                <div class="detail-card">
+                    <h3>🏆 Competitions</h3>
+                    <ul>
+                        <li>Robotic Dog Racing</li>
+                        <li>Obstacle Course Challenge</li>
+                        <li>AI Navigation Contest</li>
+                        <li>Automation Olympics</li>
+                        <li>Innovation Showcase</li>
+                    </ul>
+                </div>
+                <div class="detail-card">
+                    <h3>🎓 Workshops</h3>
+                    <ul>
+                        <li>Introduction to Robotics</li>
+                        <li>Computer Vision & AI</li>
+                        <li>Motor Control Systems</li>
+                        <li>Sensor Integration</li>
+                        <li>ROS (Robot Operating System)</li>
+                    </ul>
+                </div>
+                <div class="detail-card">
+                    <h3>🎤 Guest Speakers</h3>
+                    <ul>
+                        <li>Industry Experts</li>
+                        <li>Research Scientists</li>
+                        <li>Startup Founders</li>
+                        <li>Product Engineers</li>
+                        <li>Academic Professors</li>
+                    </ul>
+                </div>
+                <div class="detail-card">
+                    <h3>🎁 Prizes</h3>
+                    <ul>
+                        <li>Cash Prizes ₹2,00,000+</li>
+                        <li>Robotics Kits</li>
+                        <li>Internship Opportunities</li>
+                        <li>Mentorship Programs</li>
+                        <li>Certificates & Swag</li>
+                    </ul>
+                </div>
+                <div class="detail-card">
+                    <h3>🔧 Tech Stack</h3>
+                    <ul>
+                        <li>Arduino & Raspberry Pi</li>
+                        <li>Python & C++</li>
+                        <li>TensorFlow & PyTorch</li>
+                        <li>OpenCV</li>
+                        <li>ROS & Gazebo</li>
+                    </ul>
+                </div>
+                <div class="detail-card">
+                    <h3>🌟 Special Features</h3>
+                    <ul>
+                        <li>Live Demos</li>
+                        <li>Networking Sessions</li>
+                        <li>Industry Exhibition</li>
+                        <li>Job Fair</li>
+                        <li>Research Presentations</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="timeline">
+        <div class="timeline-container">
+            <div class="section-header">
+                <h2>Event Schedule</h2>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">
+                    <h4>Day 1</h4>
+                    <p>March 15</p>
+                </div>
+                <div class="timeline-content">
+                    <h3>Opening & Workshops</h3>
+                    <p>Inauguration ceremony, keynote speeches, and hands-on workshops on robotics fundamentals, AI integration, and sensor programming.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">
+                    <h4>Day 2</h4>
+                    <p>March 16</p>
+                </div>
+                <div class="timeline-content">
+                    <h3>Competitions Begin</h3>
+                    <p>Robotic dog racing, obstacle courses, and AI navigation challenges. Industry exhibitions and networking sessions throughout the day.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">
+                    <h4>Day 3</h4>
+                    <p>March 17</p>
+                </div>
+                <div class="timeline-content">
+                    <h3>Finals & Awards</h3>
+                    <p>Championship rounds, innovation showcase presentations, award ceremony, and closing celebrations with networking opportunities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="registration" id="register">
+        <h2>Ready to Join Chi Chi?</h2>
+        <p>Register now and be part of NIT Jalandhar's biggest robotics event</p>
+        <a href="contact.html" class="btn btn-primary">Register for Chi Chi</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Super Quant Coders | NIT Jalandhar. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function petChiChi() {
+            const robot = document.getElementById('robotDog');
+            robot.style.animation = 'none';
+            setTimeout(() => {
+                robot.style.animation = '';
+            }, 10);
+        }
+    </script>
+</body>
+</html>
